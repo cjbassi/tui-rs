@@ -33,6 +33,7 @@ pub struct Sparkline<'a> {
     max: Option<u64>,
     // The direction to render the sparkine, either from left to right, or from right to left
     direction: RenderDirection,
+    show_baseline: bool,
 }
 
 pub enum RenderDirection {
@@ -48,6 +49,7 @@ impl<'a> Default for Sparkline<'a> {
             data: &[],
             max: None,
             direction: RenderDirection::LTR,
+            show_baseline: false,
         }
     }
 }
@@ -75,6 +77,11 @@ impl<'a> Sparkline<'a> {
 
     pub fn direction(mut self, direction: RenderDirection) -> Sparkline<'a> {
         self.direction = direction;
+        self
+    }
+
+    pub fn show_baseline(mut self, show_baseline: bool) -> Sparkline<'a> {
+        self.show_baseline = show_baseline;
         self
     }
 }
@@ -113,8 +120,7 @@ impl<'a> Widget for Sparkline<'a> {
         for j in (0..spark_area.height).rev() {
             for (i, d) in data.iter_mut().enumerate() {
                 let symbol = match *d {
-                    0 => " ",
-                    1 => bar::ONE_EIGHTH,
+                    0 | 1 => bar::ONE_EIGHTH,
                     2 => bar::ONE_QUARTER,
                     3 => bar::THREE_EIGHTHS,
                     4 => bar::HALF,
