@@ -135,7 +135,7 @@ impl<'a> Widget for Sparkline<'a> {
             for (i, d) in data.iter_mut().enumerate() {
                 let symbol = match *d {
                     0 => {
-                        if self.show_baseline && j == spark_area.height {
+                        if self.show_baseline && j == spark_area.height - 1 {
                             bar::ONE_EIGHTH
                         } else {
                             " "
