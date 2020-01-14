@@ -31,6 +31,7 @@ pub struct Sparkline<'a> {
     /// The maximum value to take to compute the maximum bar height (if nothing is specified, the
     /// widget uses the max of the dataset)
     max: Option<u64>,
+    show_baseline: bool,
 }
 
 impl<'a> Default for Sparkline<'a> {
@@ -40,6 +41,7 @@ impl<'a> Default for Sparkline<'a> {
             style: Default::default(),
             data: &[],
             max: None,
+            show_baseline: false,
         }
     }
 }
@@ -62,6 +64,11 @@ impl<'a> Sparkline<'a> {
 
     pub fn max(mut self, max: u64) -> Sparkline<'a> {
         self.max = Some(max);
+        self
+    }
+
+    pub fn show_baseline(mut self, show_baseline: bool) -> Sparkline<'a> {
+        self.show_baseline = show_baseline;
         self
     }
 }
@@ -100,8 +107,7 @@ impl<'a> Widget for Sparkline<'a> {
         for j in (0..spark_area.height).rev() {
             for (i, d) in data.iter_mut().enumerate() {
                 let symbol = match *d {
-                    0 => " ",
-                    1 => bar::ONE_EIGHTH,
+                    0 | 1 => bar::ONE_EIGHTH,
                     2 => bar::ONE_QUARTER,
                     3 => bar::THREE_EIGHTHS,
                     4 => bar::HALF,
