@@ -102,7 +102,7 @@ impl<'a> Widget for Sparkline<'a> {
 
         if self.show_baseline {
             for i in spark_area.left()..spark_area.right() {
-                buf.get_mut(i, spark_area.bottom())
+                buf.get_mut(i, spark_area.bottom() - 1)
                     .set_symbol(bar::ONE_EIGHTH)
                     .set_fg(self.style.fg)
                     .set_bg(self.style.bg);
