@@ -50,7 +50,6 @@ impl<'a> Default for Sparkline<'a> {
             max: None,
             direction: RenderDirection::LTR,
             show_baseline: false,
-            show_baseline: false,
         }
     }
 }
@@ -78,11 +77,6 @@ impl<'a> Sparkline<'a> {
 
     pub fn direction(mut self, direction: RenderDirection) -> Sparkline<'a> {
         self.direction = direction;
-        self
-    }
-
-    pub fn show_baseline(mut self, show_baseline: bool) -> Sparkline<'a> {
-        self.show_baseline = show_baseline;
         self
     }
 
